@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Escala</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Century+Gothic&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      min-height: 100vh;
+      max-width: 390px;
+      margin: 0 auto;
+      padding: 40px 24px 32px;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      line-height: 1;
+      color: #605f5f;
+      margin-bottom: 6px;
+      letter-spacing: 3px;
+    }
+
+    .sub {
+      font-size: 13px;
+      color: #8b8a8a;
+      margin-bottom: 80px;
+    }
+
+    .scale-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #e8b4b8;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+    }
+
+    .scale-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .scale-input {
+      background: #fff;
+      border: none;
+      border-radius: 6px;
+      color: #3a3a3a;
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      width: 80px;
+      padding: 3px 10px;
+      text-align: center;
+    }
+
+    .scale-input:focus {
+      outline: none;
+    }
+
+    .card {
+      background: #f5dde0;
+      border-radius: 12px;
+      padding: 18px 18px 18px 18px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-left {
+      flex: 1;
+    }
+
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      color: #363535;
+      letter-spacing: 1.2px;
+      margin-bottom: px;
+    }
+
+    .card-desc {
+      font-size: 11px;
+      color: #444343;
+      margin-bottom: 12px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .main-input {
+      background: #e8b4b8;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 1px;
+      width: 90px;
+      padding: 4px 12px;
+      text-align: center;
+    }
+
+    .main-input:focus {
+      outline: none;
+    }
+
+    .main-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .unit-select {
+      background: #e8b4b8;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Century Gothic', sans-serif;
+      font-size: 13px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .unit-select:focus {
+      outline: none;
+    }
+
+    .card-icon {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      opacity: 0.7;
+      margin-right: 15px;
+    }
+
+    .arrow-sep {
+      text-align: center;
+      color: #ddd;
+      font-size: 20px;
+      margin: 2px 0 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>CALCULADORA<br>DE ESCALA</h1>
+  <p class="sub">Para estudiantes de arquitectura :)</p>
+
+  <div class="scale-row">
+    <span class="scale-label">ESCALA 1:</span>
+    <input class="scale-input" type="number" id="escala" value="20" oninput="recalcular()">
+  </div>
+
+  <div class="card">
+    <div class="card-left">
+      <div class="card-title">MEDIDA REAL:</div>
+      <div class="card-desc">La dimensión del edificio</div>
+      <div class="input-row">
+        <input class="main-input" type="number" id="real" placeholder="0" oninput="calcularDesdeReal()">
+        <select class="unit-select" id="unidadReal" onchange="calcularDesdeReal()">
+          <option value="1000">m</option>
+          <option value="10">cm</option>
+          <option value="1">mm</option>
+        </select>
+      </div>
+    </div>
+    <svg class="card-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="8,42 40,12 72,42" stroke="#c4888c" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" fill="none" />
+      <polyline points="16,36 16,68 36,68 36,48 44,48 44,68 64,68 64,36" stroke="#c4888c" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      <polyline points="58,24 58,16 66,16 66,30" stroke="#c4888c" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" fill="none" />
+    </svg>
+    </svg>
+  </div>
+
+  <div class="card">
+    <div class="card-left">
+      <div class="card-title">MEDIDA EN PLANO:</div>
+      <div class="card-desc">La dimensión en el papel</div>
+      <div class="input-row">
+        <input class="main-input" type="number" id="plano" placeholder="0" oninput="calcularDesdePlano()">
+        <select class="unit-select" id="unidadPlano" onchange="calcularDesdePlano()">
+          <option value="1">mm</option>
+          <option value="10">cm</option>
+          <option value="1000">m</option>
+        </select>
+      </div>
+    </div>
+    <svg class="card-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="15" y="12" width="38" height="52" rx="2" stroke="#c4888c" stroke-width="2" fill="none" />
+      <rect x="22" y="20" width="24" height="18" rx="1" stroke="#c4888c" stroke-width="2" fill="none" />
+      <line x1="22" y1="46" x2="46" y2="46" stroke="#c4888c" stroke-width="2" stroke-linecap="round" />
+      <line x1="22" y1="53" x2="38" y2="53" stroke="#c4888c" stroke-width="2" stroke-linecap="round" />
+      <polyline points="45,38 53,30 65,42 65,64 45,64 45,38" stroke="#c4888c" stroke-width="2" fill="none"
+        stroke-linejoin="round" />
+      <polyline points="45,38 53,38 53,30" stroke="#c4888c" stroke-width="2" fill="none" />
+    </svg>
+  </div>
+
+  <script>
+    function calcularDesdeReal() {
+      const escala = parseFloat(document.getElementById('escala').value);
+      const real = parseFloat(document.getElementById('real').value);
+      const uReal = parseFloat(document.getElementById('unidadReal').value);
+      const uPlano = parseFloat(document.getElementById('unidadPlano').value);
+      if (isNaN(real) || isNaN(escala)) return;
+      const resultado = (real * uReal) / escala / uPlano;
+      document.getElementById('plano').value = parseFloat(resultado.toFixed(4));
+    }
+    function calcularDesdePlano() {
+      const escala = parseFloat(document.getElementById('escala').value);
+      const plano = parseFloat(document.getElementById('plano').value);
+      const uPlano = parseFloat(document.getElementById('unidadPlano').value);
+      const uReal = parseFloat(document.getElementById('unidadReal').value);
+      if (isNaN(plano) || isNaN(escala)) return;
+      const resultado = (plano * uPlano * escala) / uReal;
+      document.getElementById('real').value = parseFloat(resultado.toFixed(4));
+    } function recalcular() {
+      if (document.getElementById('real').value) {
+        calcularDesdeReal();
+      } else if (document.getElementById('plano').value) {
+        calcularDesdePlano();
+      }
+    }
+  </script>
+</body>
+
+</html>
